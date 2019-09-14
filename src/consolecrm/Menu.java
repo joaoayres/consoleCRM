@@ -46,10 +46,10 @@ public class Menu {
                 this.customerMenu();
                 break;
             case 2:
-                //this.productMenu();
+                this.productMenu();
                 break;
             case 3:
-                //this.orderMenu();
+                this.orderMenu();
                 break;
             case 4:
                 this.userMenu();
