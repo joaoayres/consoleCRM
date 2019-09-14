@@ -146,6 +146,95 @@ public class Menu {
         this.customerMenu();
     }
     
+    // Product section of the Menu
+    public void productMenu() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("\nSelect the Product option:\n");
+        System.out.print("1 - Create\n");
+        System.out.print("2 - Search\n");
+        System.out.print("3 - Update\n");
+        System.out.print("4 - Delete\n");
+        System.out.print("5 - Main Menu\n");
+        
+        productOption = Integer.parseInt(sc.nextLine());
+        
+        switch (productOption){
+            case 1:
+                this.createProductScreen();
+                break;
+            case 2:
+                this.searchProductScreen();
+                break;
+            case 3:
+                this.updateProductScreen();
+                break;
+            case 4:
+                this.deleteProductScreen();
+                break;
+            case 5:
+                this.mainMenu();
+                break;
+        }
+    }
+    
+    public void createProductScreen() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        Product newproduct = new Product();
+        
+        System.out.print("Description: ");
+        newproduct.setDescription(sc.nextLine());
+        System.out.print("Number: ");
+        newproduct.setNumber(Integer.parseInt(sc.nextLine()));
+        System.out.print("Price: ");
+        newproduct.setPrice(Double.parseDouble(sc.nextLine()));
+        
+        newproduct.createProductInFile(newproduct);
+        
+        this.productMenu();
+    }
+    
+    public void searchProductScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Description: ");
+        String searchProduct = sc.nextLine();
+        Product auxProduct = new Product();
+        
+        try{
+        System.out.print(auxProduct.searchProductInFile(searchProduct).getDescription() + 
+                " - " + auxProduct.searchProductInFile(searchProduct).getNumber() + "\n");
+        } catch (Exception e){System.out.print(e);}
+            
+        this.productMenu();
+    }
+    
+    public void updateProductScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Description: ");
+        String description = sc.nextLine();
+        System.out.print("Enter new Number: ");
+        int newNumber = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter new Price: ");
+        double newPrice = Double.parseDouble(sc.nextLine());
+        Product auxProduct = new Product();
+        
+        auxProduct.updateProductInFile(description, newNumber, newPrice);
+        this.productMenu();
+    }
+    
+    public void deleteProductScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Description: ");
+        String searchProduct = sc.nextLine();
+        Product auxProduct = new Product();
+        
+        auxProduct.deleteProductInFile(searchProduct);
+        this.productMenu();
+    }
+    
     // User section of the Menu
     public void userMenu() throws Exception{
         Scanner sc = new Scanner(System.in);
