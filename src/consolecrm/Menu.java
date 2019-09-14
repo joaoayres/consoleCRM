@@ -43,7 +43,7 @@ public class Menu {
         
         switch (mainOption){
             case 1:
-                //this.customerMenu();
+                this.customerMenu();
                 break;
             case 2:
                 //this.productMenu();
@@ -55,6 +55,95 @@ public class Menu {
                 this.userMenu();
                 break;
         }
+    }
+    
+    // Customer section of the Menu
+    public void customerMenu() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("\nSelect the Customer option:\n");
+        System.out.print("1 - Create\n");
+        System.out.print("2 - Search\n");
+        System.out.print("3 - Update\n");
+        System.out.print("4 - Delete\n");
+        System.out.print("5 - Main Menu\n");
+        
+        customerOption = Integer.parseInt(sc.nextLine());
+        
+        switch (customerOption){
+            case 1:
+                this.createCustomerScreen();
+                break;
+            case 2:
+                this.searchCustomerScreen();
+                break;
+            case 3:
+                this.updateCustomerScreen();
+                break;
+            case 4:
+                this.deleteCustomerScreen();
+                break;
+            case 5:
+                this.mainMenu();
+                break;
+        }
+    }
+    
+    public void createCustomerScreen() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        Customer newcustomer = new Customer();
+        
+        System.out.print("Name: ");
+        newcustomer.setName(sc.nextLine());
+        System.out.print("Code: ");
+        newcustomer.setCode(sc.nextLine());
+        System.out.print("State: ");
+        newcustomer.setState(sc.nextLine());
+        
+        newcustomer.createCustomerInFile(newcustomer);
+        
+        this.customerMenu();
+    }
+    
+    public void searchCustomerScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Name: ");
+        String searchCustomer = sc.nextLine();
+        Customer auxCustomer = new Customer();
+        
+        try{
+        System.out.print(auxCustomer.searchCustomerInFile(searchCustomer).getName() + 
+                " - " + auxCustomer.searchCustomerInFile(searchCustomer).getCode() + "\n");
+        } catch (Exception e){System.out.print(e);}
+            
+        this.customerMenu();
+    }
+    
+    public void updateCustomerScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter new Code: ");
+        String newCode = sc.nextLine();
+        System.out.print("Enter new State: ");
+        String newState = sc.nextLine();
+        Customer auxCustomer = new Customer();
+        
+        auxCustomer.updateCustomerInFile(name, newCode, newState);
+        this.customerMenu();
+    }
+    
+    public void deleteCustomerScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Name: ");
+        String searchCustomer = sc.nextLine();
+        Customer auxCustomer = new Customer();
+        
+        auxCustomer.deleteCustomerInFile(searchCustomer);
+        this.customerMenu();
     }
     
     // User section of the Menu
@@ -78,10 +167,10 @@ public class Menu {
                 this.searchUserScreen();
                 break;
             case 3:
-                //update
+                this.updateUserScreen();
                 break;
             case 4:
-                //delete
+                this.deleteUserScreen();
                 break;
             case 5:
                 this.mainMenu();
@@ -117,6 +206,32 @@ public class Menu {
                 " - " + auxUser.searchUserInFile(searchUser).getPermission() + "\n");
         } catch (Exception e){System.out.print(e);}
             
+        this.userMenu();
+    }
+    
+    public void updateUserScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter new Password: ");
+        String newPassword = sc.nextLine();
+        System.out.print("Enter new Permission: ");
+        int newPermission = Integer.parseInt(sc.nextLine());
+        User auxUser = new User();
+        
+        auxUser.updateUserInFile(username, newPassword, newPermission);
+        this.userMenu();
+    }
+    
+    public void deleteUserScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Username: ");
+        String searchUser = sc.nextLine();
+        User auxUser = new User();
+        
+        auxUser.deleteUserInFile(searchUser);
         this.userMenu();
     }
 }

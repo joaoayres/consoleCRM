@@ -19,19 +19,19 @@ public class User {
     private Permission permission;
     
     public String getUserName() {
-    return userName;
+        return userName;
     }
     
     public void setUserName(String newUserName) {
-    this.userName = newUserName;
+        this.userName = newUserName;
     }
     
     public String getPassword() {
-    return password;
+        return password;
     }
     
     public void setPassword(String newPassword) {
-    this.password = newPassword;
+        this.password = newPassword;
     }
     
     public String getPermission() {
@@ -58,7 +58,7 @@ public class User {
                 + "\\FTT\\EC6\\LP2\\ConsoleCRM\\database\\User.txt", true);
                 
             BufferedWriter bw = new BufferedWriter(writer)) {
-            bw.write(user.getUserName() + "#" + user.getPassword() + "#"
+            bw.write("\n" + user.getUserName() + "#" + user.getPassword() + "#"
             + user.getPermission());
 	} catch (IOException e) {
 		System.err.format("IOException: %s%n", e);
@@ -87,6 +87,7 @@ public class User {
             
             if (c == 0)
                     throw new Exception("User not found in the database!");
+            
         } catch (IOException e) {
             System.err.format("IOException: %s%n", e);
         }
@@ -127,8 +128,48 @@ public class User {
                     BufferedWriter bw = new BufferedWriter(writer)) {
                 
                 for(String text : usersInFile){
-                    bw.write(text);
+                    bw.write("\n" + text);
                 }
+                    
+            } catch (IOException e) {
+                System.err.format("IOException: %s%n", e);
+            }
+            
+        } catch (IOException e) {
+            System.err.format("IOException: %s%n", e);
+        }
+    }
+    
+    public void deleteUserInFile(String username) throws Exception {
+        User user = new User();
+        try (FileReader reader = new FileReader("C:\\Users\\joaom\\Desktop\\Lixeira"
+                + "\\FTT\\EC6\\LP2\\ConsoleCRM\\database\\User.txt");
+                
+                BufferedReader br = new BufferedReader(reader)) {
+            String line;
+            List <String> usersInFile = new ArrayList<String>();
+            
+            while ((line = br.readLine()) != null) {
+                if(!line.contains(username)){
+                    usersInFile.add(line);
+                }
+            }
+            
+            PrintWriter cleaner = new PrintWriter("C:\\Users\\joaom\\Desktop\\Lixeira"
+                    + "\\FTT\\EC6\\LP2\\ConsoleCRM\\database\\User.txt");
+            cleaner.print("");
+            cleaner.close();
+
+            
+            try(FileWriter writer = new FileWriter("C:\\Users\\joaom\\Desktop\\Lixeira"
+                    + "\\FTT\\EC6\\LP2\\ConsoleCRM\\database\\User.txt", true);
+                    
+                    BufferedWriter bw = new BufferedWriter(writer)) {
+                
+                for(String text : usersInFile){
+                    bw.write("\n" + text);
+                }
+                    
             } catch (IOException e) {
                 System.err.format("IOException: %s%n", e);
             }
