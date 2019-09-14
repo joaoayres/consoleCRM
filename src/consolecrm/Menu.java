@@ -235,6 +235,91 @@ public class Menu {
         this.productMenu();
     }
     
+        // Order section of the Menu
+    public void orderMenu() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("\nSelect the Order option:\n");
+        System.out.print("1 - Create\n");
+        System.out.print("2 - Search\n");
+        System.out.print("3 - Update\n");
+        System.out.print("4 - Delete\n");
+        System.out.print("5 - Main Menu\n");
+        
+        orderOption = Integer.parseInt(sc.nextLine());
+        
+        switch (orderOption){
+            case 1:
+                this.createOrderScreen();
+                break;
+            case 2:
+                this.searchOrderScreen();
+                break;
+            case 3:
+                this.updateOrderScreen();
+                break;
+            case 4:
+                this.deleteOrderScreen();
+                break;
+            case 5:
+                this.mainMenu();
+                break;
+        }
+    }
+    
+    public void createOrderScreen() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        Order neworder = new Order();
+        
+        System.out.print("Order Number: ");
+        neworder.setOrderNumber(sc.nextLine());
+        System.out.print("Product: ");
+        neworder.setProduct(sc.nextLine());
+        
+        neworder.createOrderInFile(neworder);
+        
+        this.orderMenu();
+    }
+    
+    public void searchOrderScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Order Number: ");
+        String searchOrder = sc.nextLine();
+        Order auxOrder = new Order();
+        
+        try{
+        System.out.print(auxOrder.searchOrderInFile(searchOrder).getOrderNumber() + 
+                " - " + auxOrder.searchOrderInFile(searchOrder).getProduct().getDescription() + "\n");
+        } catch (Exception e){System.out.print(e);}
+            
+        this.orderMenu();
+    }
+    
+    public void updateOrderScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Order Number: ");
+        String orderNumber = sc.nextLine();
+        System.out.print("Enter new Product: ");
+        String newProductDescription = sc.nextLine();
+        Order auxOrder = new Order();
+        
+        auxOrder.updateOrderInFile(orderNumber, newProductDescription);
+        this.orderMenu();
+    }
+    
+    public void deleteOrderScreen() throws Exception{
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter Order Number: ");
+        String searchOrder = sc.nextLine();
+        Order auxOrder = new Order();
+        
+        auxOrder.deleteOrderInFile(searchOrder);
+        this.orderMenu();
+    }
+    
     // User section of the Menu
     public void userMenu() throws Exception{
         Scanner sc = new Scanner(System.in);
